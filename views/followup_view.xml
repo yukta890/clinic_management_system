@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- ========================= -->
+    <!-- TREE VIEW -->
+    <!-- ========================= -->
+
+    <record id="view_hms_followup_tree" model="ir.ui.view">
+        <field name="name">hms.followup.tree</field>
+        <field name="model">hms.followup</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="paid == True"
+                  decoration-danger="paid == False">
+
+                <field name="follow_up_id"/>
+                <field name="patient_id"/>
+                <field name="flw_date"/>
+                <!-- <field name="stage_id"/> -->
+                <field name="charge"/>
+                <field name="paid"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- FORM VIEW -->
+    <!-- ========================= -->
+
+    <record id="view_hms_followup_form" model="ir.ui.view">
+        <field name="name">hms.followup.form</field>
+        <field name="model">hms.followup</field>
+        <field name="arch" type="xml">
+
+            <form string="Follow Up">
+
+                <!-- ================= HEADER ================= -->
+                    <header>
+
+                        <!-- STATUSBAR -->
+                        <field name="stage_id"
+                            widget="statusbar"
+                            statusbar_visible="draft,confirm,consult,done,cancel"
+                            readonly="1"/>
+
+                        <!-- DONE BUTTON -->
+                        <button name="action_set_done"
+                                type="object"
+                                string="Mark Done"
+                                class="btn-success"
+                                invisible="stage_code not in ['draft', 'consult']"/>
+
+                        <!-- CANCEL BUTTON -->
+                        <button name="action_set_cancel"
+                                type="object"
+                                string="Cancel"
+                                class="btn-danger"
+                                invisible="stage_code == 'done' or stage_code == 'cancel'"/>
+
+                    </header>
+
+                <sheet>
+
+                    <!-- TITLE -->
+                    <field name="stage_code" invisible="1"/>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="follow_up_id" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <!-- BASIC INFO -->
+                    <group>
+                        <group>
+                            <field name="patient_id" readonly="1"/>
+                            <field name="flw_date"/>
+                            <field name="disease_ids" related="hms.prescription.wizard.disease_ids" widget="many2many_tags"/>
+                        </group>
+
+                        <group>
+                            <field name="doctor_id" readonly="1"/>
+                            <field name="charge"/>
+                            <field name="paid"/>
+                        </group>
+                    </group>
+
+                    <!-- NOTEBOOK -->
+                    <notebook>
+
+                        <page string="Prescription">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="medicine_id"/>
+                                    <field name="dosage"/>
+                                    <field name="instruction"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Additional">
+                            <field name="additional" widget="html"/>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+                <!-- CHATTER -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- ACTION -->
+    <!-- ========================= -->
+
+    <record id="action_hms_followup" model="ir.actions.act_window">
+        <field name="name">Followups</field>
+        <field name="res_model">hms.followup</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

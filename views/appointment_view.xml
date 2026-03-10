@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ========================= -->
+    <!-- KANBAN VIEW -->
+    <!-- ========================= -->
+
+    <record id="view_appointment_kanban" model="ir.ui.view">
+        <field name="name">hms.appointment.kanban</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id"
+                    kanban_color="stage_id.kanban_color">
+
+                <field name="stage_id"/>
+                <field name="patient_id"/>
+                <field name="patient_doctor"/>
+                <field name="appointment_date"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong>
+                                <field name="patient_id"/>
+                            </strong>
+
+                            <div>
+                                Doctor: <field name="patient_doctor"/>
+                            </div>
+
+                            <div>
+                                Date: <field name="appointment_date"/>
+                            </div>
+
+                            <div>
+                                Stage: <field name="stage_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- FORM VIEW -->
+    <!-- ========================= -->
+
+    <record id="view_appointment_form" model="ir.ui.view">
+        <field name="name">hms.appointment.form</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Appointment">
+                
+                <header>
+
+                        <!-- STATUSBAR (NOT CLICKABLE) -->
+                        <field name="stage_id"
+                            widget="statusbar"
+                            readonly="1"/>
+
+                        <!-- DRAFT -->
+                        <button name="action_set_confirm"
+                                type="object"
+                                string="Confirm"
+                                class="btn-primary"
+                                invisible="stage_code != 'draft'"/>
+
+                        <button name="action_set_cancel"
+                                type="object"
+                                string="Cancel"
+                                class="btn-danger"
+                                invisible="stage_code != 'draft' and stage_code != 'confirm'"/>
+
+                        <!-- CONFIRM -->
+                        <button name="action_set_consult"
+                                type="object"
+                                string="Start Consultation"
+                                class="btn-primary"
+                                invisible="stage_code != 'confirm'"/>
+
+                        <!-- CONSULT -->
+                        <button name="action_open_prescription_wizard"
+                                type="object"
+                                string="Prescription"
+                                class="btn-secondary"
+                                invisible="stage_code != 'consult'"
+                                context="{'default_appointment_id': id,
+                                        'default_patient_id': patient_id}"/>
+                        <button name="action_copy_last_followup"
+                                string="Copy Last Medicine"
+                                type="object"
+                                class="btn-primary"
+                                invisible="stage_code != 'consult'"/>
+
+                        <button name="action_set_done"
+                                type="object"
+                                string="Mark Done"
+                                class="btn-success"
+                                invisible="stage_code != 'consult'"/>
+
+                    </header>
+                <sheet>
+
+                    <div class="row">
+
+                        <!-- LEFT : Appointment Info -->
+                        <div class="col-6">
+                            <group>
+                                <field name="stage_code" invisible="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="patient_id"/>
+                                <field name="appointment_date"/>
+                                <field name="patient_age" readonly="1"/>
+                                <field name="patient_gender" readonly="1"/>
+                                <field name="patient_phone" readonly="1"/>
+                                <field name="patient_mobile" readonly="1"/>
+                                <field name="patient_doctor" readonly="1"/>
+                            </group>
+                        </div>
+
+                        <!-- RIGHT : Last 3 Followups -->
+                        <div class="col-6">
+
+                            <separator string="Last 3 Followups"/>
+
+                            <field name="last_three_followup_html"
+                                widget="html"
+                                nolabel="1"
+                                readonly="1"/>
+
+                        </div>
+
+                    </div>
+
+                <!-- </sheet>
+                <sheet> -->
+                    <notebook>
+
+                        <!-- FOLLOWUPS TAB -->
+                        <page string="Followups">
+
+                            <field name="followup_ids" context="{'default_flw_date': context_today()}">
+
+                                <tree create="0">
+                                    <field name="flw_date"/>
+                                    <field name="disease_ids" widget="many2many_tags"/>
+                                    <field name="medicine_html" widget="html"/>
+                                    <field name="additional"/>
+                                    <field name="charge"/>
+                                    <field name="paid"/>
+                                </tree>
+
+                            </field>
+
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <!-- CHATTER -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- TREE VIEW -->
+    <!-- ========================= -->
+
+    <record id="view_appointment_tree" model="ir.ui.view">
+        <field name="name">hms.appointment.tree</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Appointments">
+                <field name="patient_id"/>
+                <field name="patient_doctor"/>
+                <field name="appointment_date"/>
+                <field name="stage_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- SEARCH VIEW -->
+    <!-- ========================= -->
+
+    <record id="view_appointment_search" model="ir.ui.view">
+    <field name="name">hms.appointment.search</field>
+    <field name="model">hms.appointment</field>
+    <field name="arch" type="xml">
+        <search string="Search Appointments">
+
+            <!-- Searchable fields -->
+            <field name="patient_id"/>
+            <field name="patient_doctor"/>
+            <field name="stage_id"/>
+            <field name="appointment_date"/>
+
+            <!-- Filters -->
+            <filter string="Draft"
+                    name="draft"
+                    domain="[('stage_id.code','=','draft')]"/>
+
+            <filter string="Confirmed"
+                    name="confirm"
+                    domain="[('stage_id.code','=','confirm')]"/>
+
+            <filter string="In Consultation"
+                    name="consult"
+                    domain="[('stage_id.code','=','consult')]"/>
+
+            <filter string="Done"
+                    name="done"
+                    domain="[('stage_id.code','=','done')]"/>
+
+            <filter string="Cancelled"
+                    name="cancel"
+                    domain="[('stage_id.code','=','cancel')]"/>
+
+            <separator/>
+
+            <filter string="Today's Appointments"
+                    name="today"
+                    domain="[('appointment_date','=',context_today())]"/>
+
+        </search>
+    </field>
+</record>
+
+
+    <!-- ========================= -->
+    <!-- ACTION -->
+    <!-- ========================= -->
+
+    <record id="action_hms_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">hms.appointment</field>
+        <field name="view_mode">kanban,form,tree</field>
+    </record>
+
+</odoo>

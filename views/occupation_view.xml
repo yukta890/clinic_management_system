@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<!-- ================= TREE VIEW ================= -->
+<record id="view_hms_occupation_tree" model="ir.ui.view">
+    <field name="name">hms.occupation.tree</field>
+    <field name="model">hms.occupation</field>
+    <field name="arch" type="xml">
+        <tree string="Occupations">
+            <field name="name"/>
+            <field name="active"/>
+        </tree>
+    </field>
+</record>
+
+
+<!-- ================= FORM VIEW ================= -->
+<record id="view_hms_occupation_form" model="ir.ui.view">
+    <field name="name">hms.occupation.form</field>
+    <field name="model">hms.occupation</field>
+    <field name="arch" type="xml">
+        <form string="Occupation">
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="active"/>
+                    <field name="note"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+
+<!-- ================= ACTION ================= -->
+<record id="action_hms_occupation" model="ir.actions.act_window">
+    <field name="name">Occupations</field>
+    <field name="res_model">hms.occupation</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<!-- ================= MENU ================= -->
+<!-- Configuration menu parent must exist in your module -->
+
+
+
+</odoo>

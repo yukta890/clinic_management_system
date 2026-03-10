@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hms_patient,hms.patient,model_hms_patient,,1,1,1,1
+access_hms_occupation_user,hms.occupation.user,model_hms_occupation,base.group_user,1,1,1,1
+access_hms_followup_user,hms.followup.user,model_hms_followup,base.group_user,1,1,1,1
+access_appointment,appointment,model_hms_appointment,,1,1,1,1
+access_drug,drug,model_hms_drug,,1,1,1,1
+access_hms_doctor_user,hms.doctor.user,model_hms_doctor,base.group_user,1,1,1,1
+access_hms_diseases_user,hms.diseases.user,model_hms_diseases,base.group_user,1,1,1,1
+access_hms_prescription_wizard,access_hms_prescription_wizard,model_hms_prescription_wizard,base.group_user,1,1,1,1
+access_followup_line_user,access_followup_line_user,model_hms_followup_line,base.group_user,1,1,1,1
+access_hms_stage_user,hms.stage.user,model_hms_stage,base.group_user,1,1,0,0
+access_hms_prescription_wizard_line,hms.prescription.wizard.line,model_hms_prescription_wizard_line,,1,1,1,1

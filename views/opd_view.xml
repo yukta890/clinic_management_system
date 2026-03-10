@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_today_opd_tree" model="ir.ui.view">
+        <field name="name">hms.today.opd.tree</field>
+        <field name="model">hms.opd</field>
+        <field name="arch" type="xml">
+            <tree string="Today OPD">
+                <field name="patient_id"/>
+                <field name="appointment_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_hms_opd_kanban" model="ir.ui.view">
+        <field name="name">hms.opd.kanban</field>
+        <field name="model">hms.opd</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="appointment_date"/>
+                <field name="state"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+
+                            <div>
+                                <b>Patient:</b>
+                                <field name="patient_id"/>
+                            </div>
+
+                            <div>
+                                <b>Date:</b>
+                                <field name="appointment_date"/>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="view_hms_opd_search" model="ir.ui.view">
+        <field name="name">hms.opd.search</field>
+        <field name="model">hms.opd</field>
+        <field name="arch" type="xml">
+             <search>
+                <field name="patient_id"/>
+                <field name="state"/>
+
+                <filter string="Waiting"
+                        name="waiting"
+                        domain="[('state','=','draft')]"/>
+
+                <filter string="In Consultation"
+                        name="progress"
+                        domain="[('state','=','in_progress')]"/>
+
+                <filter string="Done"
+                        name="done"
+                        domain="[('state','=','done')]"/>
+            </search>
+        </field>
+    </record>
+    
+        <!-- OPD Form View -->
+    <record id="view_hms_opd_form" model="ir.ui.view">
+        <field name="name">hms.opd.form</field>
+        <field name="model">hms.opd</field>
+        <field name="arch" type="xml">
+            <form string="OPD Details">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="patient_id"/>
+                        <field name="appointment_date"/>
+                        <field name="state" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    
+    </record>
+    <!-- OPD Action -->
+    <record id="action_hms_opd" model="ir.actions.act_window">
+        <field name="name">Today OPD</field>
+        <field name="res_model">hms.opd</field>
+        <field name="view_mode">kanban,tree,form</field>    
+        <field name="domain">[('appointment_date','=',context_today())]</field>
+        <field name="search_view_id" ref="view_hms_opd_search"/>
+    </record>
+
+</odoo>

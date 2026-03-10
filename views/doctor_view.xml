@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Doctor Form View -->
+    <record id="view_hms_doctor_form" model="ir.ui.view">
+        <field name="name">hms.doctor.form</field>
+        <field name="model">hms.doctor</field>
+        <field name="arch" type="xml">
+
+            <form string="Doctor">
+
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="specialization"/>
+                            <field name="experience"/>
+                            <field name="consultation_fees"/>
+                        </group>
+
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                    </group>
+
+                </sheet>
+
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+
+        </field>
+    </record>
+    <record id="view_hms_doctor_tree" model="ir.ui.view">
+        <field name="name">hms.doctor.tree</field>
+        <field name="model">hms.doctor</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </tree>
+        </field>
+    </record>
+    <!-- ================= SEARCH VIEW ================= -->
+    <record id="view_hms_doctor_search" model="ir.ui.view">
+        <field name="name">hms.doctor.search</field>
+        <field name="model">hms.doctor</field>
+        <field name="arch" type="xml">
+            <search string="Search Doctor">
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="phone"/>
+                <field name="email"/>
+
+                <filter string="Has Email"
+                        name="has_email"
+                        domain="[('email','!=',False)]"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Specialization"
+                            name="group_specialization"
+                            context="{'group_by':'specialization'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Action -->
+    <record id="action_hms_doctor" model="ir.actions.act_window">
+        <field name="name">Doctors</field>
+        <field name="res_model">hms.doctor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

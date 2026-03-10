@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ========================= -->
+    <!-- STAGE TREE VIEW -->
+    <!-- ========================= -->
+
+    <record id="hms_stage_tree" model="ir.ui.view">
+        <field name="name">hms.stage.tree</field>
+        <field name="model">hms.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment Stages">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="fold"/>
+                <field name="kanban_color"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- STAGE FORM VIEW -->
+    <!-- ========================= -->
+
+    <record id="hms_stage_form" model="ir.ui.view">
+        <field name="name">hms.stage.form</field>
+        <field name="model">hms.stage</field>
+        <field name="arch" type="xml">
+            <form string="Appointment Stage">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="sequence"/>
+                        <field name="fold"/>
+                        <field name="kanban_color"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- STAGE ACTION -->
+    <!-- ========================= -->
+
+    <record id="action_hms_stage" model="ir.actions.act_window">
+        <field name="name">Appointment Stages</field>
+        <field name="res_model">hms.stage</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================= TREE VIEW ================= -->
+    <record id="view_hms_drug_tree" model="ir.ui.view">
+        <field name="name">hms.drug.tree</field>
+        <field name="model">hms.drug</field>
+        <field name="arch" type="xml">
+            <tree string="Drugs">
+                <field name="name"/>
+                <field name="drug_code"/>
+                <field name="category"/>
+                <field name="price"/>
+                <field name="stock"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ================= FORM VIEW ================= -->
+    <record id="view_hms_drug_form" model="ir.ui.view">
+        <field name="name">hms.drug.form</field>
+        <field name="model">hms.drug</field>
+        <field name="arch" type="xml">
+            <form string="Drug Master">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="drug_code"/>
+                        <field name="dosage"/>
+                        <field name="category"/>
+                        <field name="price"/>
+                        <field name="stock"/>
+                        <field name="description"/>
+                    </group>
+    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================= SEARCH VIEW ================= -->
+    <record id="view_hms_drug_search" model="ir.ui.view">
+        <field name="name">hms.drug.search</field>
+        <field name="model">hms.drug</field>
+        <field name="arch" type="xml">
+            <search string="Search Drugs">
+                <field name="name"/>
+                <field name="drug_code"/>
+                <field name="category"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ================= ACTION ================= -->
+    <record id="action_hms_drug" model="ir.actions.act_window">
+        <field name="name">Drugs</field>
+        <field name="res_model">hms.drug</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

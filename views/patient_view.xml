@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!-- ================= TREE VIEW ================= -->
+<record id="view_hms_patient_tree" model="ir.ui.view">
+    <field name="name">hms.patient.tree</field>
+    <field name="model">hms.patient</field>
+    <field name="arch" type="xml">
+        <tree string="Patients">
+            <field name="patient_code"/>
+            <field name="display_name"/>
+            <field name="sex"/>
+            <field name="age"/>
+            <field name="phone"/>
+            <field name="consulting_doctor"/>
+        </tree>
+    </field>
+</record>
+
+
+<!-- ================= FORM VIEW ================= -->
+<record id="view_hms_patient_form" model="ir.ui.view">
+    <field name="name">hms.patient.form</field>
+    <field name="model">hms.patient</field>
+    <field name="arch" type="xml">
+        <form string="Patient">
+
+            <sheet>
+                 <!-- STAT BUTTONS -->
+                <div class="oe_button_box" name="button_box">
+
+                    <button name="action_view_appointments"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar">
+                        <field name="appointment_count"
+                               widget="statinfo"
+                               string="Appointments"/>
+                    </button>
+                    <button name="action_view_followups"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-stethoscope">
+                        <field name="followup_count"
+                               widget="statinfo"
+                               string="Follow-ups"/>
+                    </button>
+
+                </div>
+                <!-- Title -->
+                <div class="oe_title">
+                    <h1>
+                        <field name="patient_code" readonly="1"/>
+                    </h1>
+                    <h2>
+                        <field name="title" class="oe_inline" placeholder="Mr./Ms."/>
+                        <field name="name" class="oe_inline" placeholder="First Name"/>
+                        <field name="middle_name" class="oe_inline" placeholder="Middle"/>
+                        <field name="surname" class="oe_inline" placeholder="Surname"/>
+                    </h2>
+                </div>
+                
+            <group>
+                <group>
+                <span class="o_form_label o_td_label">
+                    <b>Address</b>
+                </span>
+
+                <div class="o_address_format">
+                    <field name="street"
+                        placeholder="Street..."
+                        class="o_address_street"/>
+
+                    <field name="street2"
+                        placeholder="Street 2..."
+                        class="o_address_street"/>
+
+                    <div class="o_row">
+                        <field name="city"
+                            placeholder="City"
+                            class="o_address_city"/>
+
+                        <field name="state_id"
+                            placeholder="State"
+                            class="o_address_state"
+                            options="{'no_create': True}"
+                            context="{'country_id': country_id}"/>
+                </div>
+
+                    <div class="o_row">
+                        <field name="zip"
+                            placeholder="ZIP"
+                            class="o_address_zip"/>
+
+                        <field name="country_id"
+                            placeholder="Country"
+                            options="{'no_create': True}"/>
+                    </div>
+                        
+                </div>
+                        <field name="phone"/>
+                        <field name="mobile_no"/>
+                        <field name="email"/>
+            </group>
+                    <group>
+                        <field name="sex" widget="radio" options="{'horizontal': true}"/>
+                        <field name="dob"/>
+                        <field name="age" readonly="1"/>
+                        <field name="marital_status"/>
+                        <field name="religion"/>
+                        <field name="occupation_id"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Follow up">
+                        <field name="consulting_doctor"/>
+                        <field name="last_followup_id"/>
+                        <field name="followcharge"/>
+                    </group>
+
+                    <group string="System Info">
+                        <field name="date_added" readonly="1"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="follow-ups">
+                        <field name="followup_ids">
+                            <tree string="Follow-ups">
+                                <field name="flw_date"/>
+                                <field name="doctor_id"/>
+                                <field name="additional"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+
+            <!-- CHATTER -->
+            <div class="oe_chatter">
+                <field name="message_follower_ids"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+
+        </form>
+    </field>
+</record>
+
+
+<!-- ================= SEARCH VIEW ================= -->
+<record id="view_hms_patient_search" model="ir.ui.view">
+    <field name="name">hms.patient.search</field>
+    <field name="model">hms.patient</field>
+    <field name="arch" type="xml">
+        <search string="Search Patients">
+
+            <!-- Search Fields -->
+            <field name="patient_code"/>
+            <field name="name"/>
+            <field name="phone"/>
+            <field name="consulting_doctor"/>
+
+            <separator/>
+
+            <!-- Gender Filters -->
+            <group expand="0" string="Gender">
+                <filter name="male"
+                        string="Male"
+                        domain="[('sex','=','male')]"/>
+
+                <filter name="female"
+                        string="Female"
+                        domain="[('sex','=','female')]"/>
+
+                <filter name="other"
+                        string="Other"
+                        domain="[('sex','=','other')]"/>
+            </group>
+
+            <!-- Group By -->
+            <group expand="0" string="Group By">
+                <filter name="group_doctor"
+                        string="Doctor"
+                        context="{'group_by':'consulting_doctor'}"/>
+
+                <filter name="group_gender"
+                        string="Gender"
+                        context="{'group_by':'sex'}"/>
+
+                <filter name="group_city"
+                        string="City"
+                        context="{'group_by':'city'}"/>
+            </group>
+
+        </search>
+    </field>
+</record>
+
+
+<!-- ================= ACTION ================= -->
+<record id="action_hms_patient" model="ir.actions.act_window">
+    <field name="name">Patients</field>
+    <field name="res_model">hms.patient</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="view_hms_patient_search"/>
+</record>
+
+
+
+
+</odoo>

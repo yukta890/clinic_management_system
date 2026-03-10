@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- =========================
+         MENU
+    ========================== -->
+    <!-- Main HMS Menu -->
+    <menuitem id="menu_hms_root"
+              name="Clinic Management"
+              sequence="1"/>
+
+    <!-- Patient Menu -->
+    <menuitem id="menu_hms_appointment"
+          name="Appointments"
+          parent="menu_hms_root"
+          action="action_hms_appointment"
+          sequence="10"/>
+     <!-- <menuitem id="menu_hms_opd"
+          name="OPD"
+          parent="menu_hms_root"
+          action="action_hms_opd"
+          sequence="20"/> -->
+    <menuitem id="menu_hms_patient"
+              name="Patients"
+              parent="menu_hms_root"
+              action="action_hms_patient"
+              sequence="30"/>
+     
+     <menuitem id="menu_hms_configuration"
+          name="Configuration"
+          parent="menu_hms_root"
+          sequence="40"/>        
+     <menuitem id="menu_hms_occupation"
+          name="Occupations"
+          parent="menu_hms_configuration"
+          action="action_hms_occupation"
+          sequence="10"/>
+     <menuitem id="menu_hms_followup"
+          name="Followups"
+          parent="menu_hms_configuration"
+          action="action_hms_followup"
+          sequence="20"/>
+     <menuitem id="menu_hms_doctor"
+          name="Doctors"
+          parent="menu_hms_configuration"
+          action="action_hms_doctor"
+          sequence="30"/>
+     <menuitem id="menu_hms_drug"
+          name="Drugs"
+          parent="menu_hms_configuration"
+          action="action_hms_drug"
+          sequence="40"/>
+     <menuitem id="menu_hms_stage"
+          name="Stages"
+          parent="menu_hms_configuration"
+          action="action_hms_stage"
+          sequence="50"/>
+</odoo>

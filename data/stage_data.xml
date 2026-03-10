@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Draft -->
+    <record id="stage_draft" model="hms.stage">
+        <field name="name">Draft</field>
+        <field name="code">draft</field>
+        <field name="sequence">1</field>
+        <field name="kanban_color">1</field>
+    </record>
+
+    <!-- Confirm -->
+    <record id="stage_confirm" model="hms.stage">
+        <field name="name">Confirm</field>
+        <field name="code">confirm</field>
+        <field name="sequence">2</field>
+        <field name="kanban_color">2</field>
+    </record>
+
+    <!-- Consult -->
+    <record id="stage_consult" model="hms.stage">
+        <field name="name">Consult</field>
+        <field name="code">consult</field>
+        <field name="sequence">3</field>
+        <field name="kanban_color">3</field>
+    </record>
+
+    <!-- Done -->
+    <record id="stage_done" model="hms.stage">
+        <field name="name">Done</field>
+        <field name="code">done</field>
+        <field name="sequence">4</field>
+        <field name="kanban_color">4</field>
+    </record>
+
+    <!-- Cancel -->
+    <record id="stage_cancel" model="hms.stage">
+        <field name="name">Cancel</field>
+        <field name="code">cancel</field>
+        <field name="sequence">5</field>
+        <field name="kanban_color">5</field>
+    </record>
+
+</odoo>
